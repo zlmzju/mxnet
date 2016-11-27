@@ -294,7 +294,7 @@ class CrossEntropy(EvalMetric):
             assert label.shape[0] == pred.shape[0]
 
             prob = pred[numpy.arange(label.shape[0]), numpy.int64(label)]
-            self.sum_metric += (-numpy.log(prob)).sum()
+            self.sum_metric += (-numpy.log(numpy.maximum(prob,numpy.finfo(float).eps))).sum()
             self.num_inst += label.shape[0]
 
 class Torch(EvalMetric):
